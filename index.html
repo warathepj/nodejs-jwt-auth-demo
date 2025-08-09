@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Registration Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .input-field:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+        }
+        .checkbox:checked {
+            background-color: #000;
+        }
+        .checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #000;
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+        }
+        .checkbox:checked::after {
+            content: "✓";
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body class="bg-[#D4FF00] min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-black mb-2">Just one more step until we can get started</h1>
+            <p class="text-black opacity-80">Create your account to continue</p>
+        </div>
+
+        <form id="registerForm" class="space-y-6">
+            <div>
+                <label for="username" class="sr-only">Username</label>
+                <input type="text" id="username" name="username" required 
+                       class="input-field w-full px-4 py-3 rounded-lg bg-white text-black placeholder-gray-400 border border-gray-200 focus:border-black"
+                       placeholder="Username">
+            </div>
+
+            <div>
+                <label for="email" class="sr-only">Email</label>
+                <input type="email" id="email" name="email" required 
+                       class="input-field w-full px-4 py-3 rounded-lg bg-white text-black placeholder-gray-400 border border-gray-200 focus:border-black"
+                       placeholder="Email address">
+            </div>
+
+            <div>
+                <label for="password" class="sr-only">Password</label>
+                <input type="password" id="password" name="password" required 
+                       class="input-field w-full px-4 py-3 rounded-lg bg-white text-black placeholder-gray-400 border border-gray-200 focus:border-black"
+                       placeholder="Password">
+            </div>
+
+            <div class="flex items-center">
+                <input type="checkbox" id="terms" name="terms" required class="checkbox mr-2">
+                <label for="terms" class="text-black text-sm">
+                    I agree to the <a href="#" class="underline">Terms of Service</a> and <a href="#" class="underline">Privacy Policy</a>
+                </label>
+            </div>
+
+            <button type="submit" 
+                    class="w-full bg-black text-white py-3 px-4 rounded-lg font-medium hover:bg-gray-900 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black focus:ring-offset-[#D4FF00]">
+                Create Account
+            </button>
+
+            <div class="text-center">
+                <p class="text-black text-sm">
+                    Already have an account? <a href="#" class="underline font-medium">Sign in</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const terms = document.getElementById('terms').checked;
+            
+            // Simple validation
+            if (!username || !email || !password || !terms) {
+                alert('Please fill in all fields and accept the terms.');
+                return;
+            }
+            
+            // Email validation
+            if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
+            // Password validation (minimum 6 characters)
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                return;
+            }
+            
+            // In a real app, you would send this data to your server
+            console.log('Registration data:', { username, email, password });
+            
+            // Show success message
+            alert('Account created successfully! Redirecting...');
+            
+            // Reset form
+            this.reset();
+            
+            // In a real app, you would redirect to another page
+            // window.location.href = '/dashboard';
+        });
+    </script>
+</body>
+</html>
