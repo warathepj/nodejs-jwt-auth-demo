@@ -116,17 +116,29 @@
                 return;
             }
             
-            // In a real app, you would send this data to your server
-            console.log('Registration data:', { username, email, password });
-            
-            // Show success message
-            alert('Account created successfully! Redirecting...');
-            
-            // Reset form
-            this.reset();
-            
-            // In a real app, you would redirect to another page
-            // window.location.href = '/dashboard';
+            // Send data to the server
+            fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, email, password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Registration failed: ' + data.error);
+                } else {
+                    alert('Account created successfully! Welcome, ' + data.username + '!');
+                    this.reset();
+                    // Optionally redirect or update UI
+                    // window.location.href = '/dashboard';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during registration.');
+            });
         });
     </script>
 </body>
