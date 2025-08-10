@@ -135,7 +135,13 @@ app.get('/api/profile', authenticateToken, async (req, res) => {
   try {
     const user = await db.get(`SELECT id, username, email, created_at FROM users WHERE id = ?`, [req.user.id]);
     if (!user) return res.status(404).json({ error: 'User not found' });
-    res.json({ user });
+
+    // Get the expiration timestamp from the decoded token
+    const token = req.cookies.jwtToken;
+    const decoded = jwt.decode(token);
+    const expiresIn = decoded ? decoded.exp : null; // 'exp' is the expiration timestamp in seconds
+
+    res.json({ user, expiresIn });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal server error' });
