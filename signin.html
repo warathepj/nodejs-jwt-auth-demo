@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .input-field:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-[#D4FF00] min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-black mb-2">Welcome Back!</h1>
+            <p class="text-black opacity-80">Sign in to your account</p>
+        </div>
+
+        <form id="loginForm" class="space-y-6">
+            <div>
+                <label for="username" class="sr-only">Username</label>
+                <input type="text" id="username" name="username" required 
+                       class="input-field w-full px-4 py-3 rounded-lg bg-white text-black placeholder-gray-400 border border-gray-200 focus:border-black"
+                       placeholder="Username">
+            </div>
+
+            <div>
+                <label for="password" class="sr-only">Password</label>
+                <input type="password" id="password" name="password" required 
+                       class="input-field w-full px-4 py-3 rounded-lg bg-white text-black placeholder-gray-400 border border-gray-200 focus:border-black"
+                       placeholder="Password">
+            </div>
+
+            <button type="submit" 
+                    class="w-full bg-black text-white py-3 px-4 rounded-lg font-medium hover:bg-gray-900 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black focus:ring-offset-[#D4FF00]">
+                Sign In
+            </button>
+
+            <div class="text-center">
+                <p class="text-black text-sm">
+                    Don't have an account? <a href="index.html" class="underline font-medium">Register here</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (!username || !password) {
+                alert('Please enter both username and password.');
+                return;
+            }
+            
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Login failed: ' + data.error);
+                } else {
+                    alert('Login successful! Token: ' + data.token);
+                    // In a real application, you would store the token (e.g., in localStorage)
+                    // and redirect the user to a protected page.
+                    // localStorage.setItem('jwtToken', data.token);
+                    // window.location.href = '/profile'; 
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred during login.');
+            });
+        });
+    </script>
+</body>
+</html>

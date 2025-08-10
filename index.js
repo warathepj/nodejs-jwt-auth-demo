@@ -111,6 +111,10 @@ app.get('/profile', authenticateToken, async (req, res) => {
   }
 });
 
+app.get('/signin', (req, res) => {
+  res.sendFile(__dirname + '/signin.html');
+});
+
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
