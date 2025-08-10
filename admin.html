@@ -67,6 +67,47 @@
 
     <script>
         console.log('Admin page script loaded');
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const loadingMessage = document.getElementById('loadingMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const userTable = document.getElementById('userTable');
+            const userTableBody = userTable.querySelector('tbody');
+
+            try {
+                const response = await fetch('/admin/users');
+                if (!response.ok) {
+                    if (response.status === 403) {
+                        errorMessage.textContent = 'Access denied: You do not have admin privileges.';
+                    } else {
+                        errorMessage.textContent = `Error: ${response.statusText}`;
+                    }
+                    errorMessage.style.display = 'block';
+                    loadingMessage.style.display = 'none';
+                    return;
+                }
+
+                const data = await response.json();
+                if (data.users && data.users.length > 0) {
+                    data.users.forEach(user => {
+                        const row = userTableBody.insertRow();
+                        row.insertCell().textContent = user.id;
+                        row.insertCell().textContent = user.username;
+                        row.insertCell().textContent = user.email || 'N/A';
+                        row.insertCell().textContent = new Date(user.created_at).toLocaleString();
+                    });
+                    userTable.style.display = 'table';
+                } else {
+                    loadingMessage.textContent = 'No users found.';
+                }
+            } catch (error) {
+                console.error('Failed to fetch users:', error);
+                errorMessage.textContent = 'Failed to load users. Please try again later.';
+                errorMessage.style.display = 'block';
+            } finally {
+                loadingMessage.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>

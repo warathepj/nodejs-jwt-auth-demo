@@ -142,8 +142,8 @@ app.get('/api/profile', authenticateToken, async (req, res) => {
   }
 });
 
-// Unprotected route to fetch all users for admin page
-app.get('/admin/users', async (req, res) => {
+// Protected route to fetch all users for admin page
+app.get('/admin/users', authenticateToken, authorizeAdmin, async (req, res) => {
   try {
     const users = await db.all(`SELECT id, username, email, created_at FROM users`);
     res.json({ users });
