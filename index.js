@@ -61,6 +61,7 @@ function authenticateToken(req, res, next) {
 app.post('/register', async (req, res) => {
   try {
     const { username, password, email } = req.body;
+    console.log('Received registration data:', { username, email, password: '[REDACTED]' }); // Log data to terminal
     if (!username || !password) return res.status(400).json({ error: 'username and password required' });
 
     const hashed = await bcrypt.hash(password, 10);
@@ -111,8 +112,23 @@ app.get('/profile', authenticateToken, async (req, res) => {
   }
 });
 
+// Unprotected route to fetch all users for admin page
+app.get('/admin/users', async (req, res) => {
+  try {
+    const users = await db.all(`SELECT id, username, email, created_at FROM users`);
+    res.json({ users });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.get('/signin', (req, res) => {
   res.sendFile(__dirname + '/signin.html');
+});
+
+app.get('/admin', (req, res) => {
+  res.sendFile(__dirname + '/admin.html');
 });
 
 app.get('/', (req, res) => {

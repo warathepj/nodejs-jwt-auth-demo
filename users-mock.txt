@@ -1,3 +1,7 @@
+alice
+s3cr3t
+alice@example.com
+
 a
 a@gmail.com
 123456
