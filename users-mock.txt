@@ -1,3 +1,7 @@
+admin
+admin@gmail.com
+banana888
+
 alice
 s3cr3t
 alice@example.com
