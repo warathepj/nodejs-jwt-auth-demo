@@ -66,42 +66,7 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            const loadingMessage = document.getElementById('loadingMessage');
-            const errorMessage = document.getElementById('errorMessage');
-            const userTable = document.getElementById('userTable');
-            const userTableBody = userTable.querySelector('tbody');
-
-            try {
-                const response = await fetch('/admin/users');
-                const data = await response.json();
-
-                if (response.ok) {
-                    if (data.users && data.users.length > 0) {
-                        data.users.forEach(user => {
-                            const row = userTableBody.insertRow();
-                            row.insertCell().textContent = user.id;
-                            row.insertCell().textContent = user.username;
-                            row.insertCell().textContent = user.email || 'N/A';
-                            row.insertCell().textContent = new Date(user.created_at).toLocaleString();
-                        });
-                        userTable.style.display = 'table';
-                    } else {
-                        errorMessage.textContent = 'No users found.';
-                        errorMessage.style.display = 'block';
-                    }
-                } else {
-                    errorMessage.textContent = `Error: ${data.error || 'Failed to fetch users'}`;
-                    errorMessage.style.display = 'block';
-                }
-            } catch (error) {
-                console.error('Fetch error:', error);
-                errorMessage.textContent = 'An error occurred while fetching users. Please try again later.';
-                errorMessage.style.display = 'block';
-            } finally {
-                loadingMessage.style.display = 'none';
-            }
-        });
+        console.log('Admin page script loaded');
     </script>
 </body>
 </html>

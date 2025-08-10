@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-[#D4FF00] min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md text-center">
+        <h1 class="text-3xl md:text-4xl font-bold text-black mb-4">Welcome to your Profile!</h1>
+        <p class="text-black opacity-80 mb-8">This is a protected page for authenticated users.</p>
+        <button id="logoutButton" class="bg-black text-white py-3 px-6 rounded-lg font-medium hover:bg-gray-900 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black focus:ring-offset-[#D4FF00]">
+            Logout
+        </button>
+    </div>
+
+    <script>
+        console.log('Profile page script loaded');
+    </script>
+</body>
+</html>

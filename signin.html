@@ -75,11 +75,13 @@
                 if (data.error) {
                     alert('Login failed: ' + data.error);
                 } else {
-                    alert('Login successful! Token: ' + data.token);
-                    // In a real application, you would store the token (e.g., in localStorage)
-                    // and redirect the user to a protected page.
-                    // localStorage.setItem('jwtToken', data.token);
-                    // window.location.href = '/profile'; 
+                    alert('Login successful!');
+                    // Token is now set as an HttpOnly cookie by the server
+                    if (data.email === 'admin@gmail.com') {
+                        window.location.href = '/admin';
+                    } else {
+                        window.location.href = '/profile';
+                    }
                 }
             })
             .catch(error => {
